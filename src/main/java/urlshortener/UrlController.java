@@ -1,8 +1,8 @@
 package urlshortener;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,14 +21,18 @@ public class UrlController {
     @GetMapping("/shorten")
     public String shortenUrl(@RequestParam String url) {
 
-        String shortCode =
-                UUID.randomUUID()
-                        .toString()
-                        .substring(0, 6);
+        String shortCode = UUID.randomUUID()
+                .toString()
+                .substring(0, 6);
 
         urlMap.put(shortCode, url);
 
         return "http://localhost:8080/" + shortCode;
+    }
+
+    @GetMapping("/stats")
+    public String stats() {
+        return "Total URLs shortened: " + urlMap.size();
     }
 
     @GetMapping("/{code}")
